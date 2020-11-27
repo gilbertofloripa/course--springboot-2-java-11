@@ -1,14 +1,19 @@
 package com.educandoweb.course.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 // implements Serializable define que o objeto possa trafegar na rede egravar em arquivo etc..
 @Entity
+@Table(name = "tb_user") //Informa qual sera o nome da tabela no banco de dados
 public class User implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -23,8 +28,10 @@ public class User implements Serializable{
 	private String phone;
 	private String password;
 	
+	@OneToMany(mappedBy = "client") // Informa ao JPA Qual o campo de relacionamento um para muitos
+	private List<Order> orders = new ArrayList<>();;
+	
 	public User() {
-		
 	}
 
 	public User(Long id, String name, String email, String phone, String password) {
@@ -76,6 +83,10 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
+	public List<Order> getOrders() {
+		return orders;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -100,7 +111,6 @@ public class User implements Serializable{
 			return false;
 		return true;
 	}
-
 	
 	
 }
