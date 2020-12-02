@@ -8,8 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_category")
@@ -21,7 +25,11 @@ public class Category implements Serializable {
 	private Long id;
 	private String name;
 	
-	@Transient // Não deixa o JPA executar
+	@JsonIgnore
+	@ManyToMany(mappedBy = "categories") // Chave muitos para muitos Produto x categoria
+	//@JoinTable(name = "tb_product_category",  // Define o nome da tabela N x N
+	//	joinColumns = @JoinColumn(name = "product_id"), // Define a chave da tabela produtos
+	//	inverseJoinColumns = @JoinColumn(name = "category_id")) // define a chave da outra tabela categoria
 	private Set<Product> products = new HashSet<>();
 	
 	public Category() {
