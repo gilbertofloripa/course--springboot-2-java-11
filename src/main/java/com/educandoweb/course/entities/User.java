@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 // implements Serializable define que o objeto possa trafegar na rede egravar em arquivo etc..
 @Entity
 @Table(name = "tb_user") //Informa qual sera o nome da tabela no banco de dados
@@ -28,6 +30,7 @@ public class User implements Serializable{
 	private String phone;
 	private String password;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "client") // Informa ao JPA Qual o campo de relacionamento um para muitos
 	private List<Order> orders = new ArrayList<>();;
 	
